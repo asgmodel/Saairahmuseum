@@ -1,0 +1,49 @@
+﻿@inherits LayoutComponentBase
+@using ChatASG.Data
+<PageTitle>متحف السعيرة</PageTitle>
+<MudThemeProvider />
+<MudDialogProvider/>
+<MudSnackbarProvider />
+<MudLayout>
+    <MudAppBar  style="@("box-shadow: none !important;background: #fff !important;"+Museum.BaseColor)" >
+        <MudIconButton Icon="@Icons.Material.Filled.Menu"  Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudText Typo="Typo.h6"  style="@Museum.BaseColor" Class="ml-3">
+            <a style="@Museum.BaseColor" href="/">متحف السعيرة</a>
+
+        </MudText>
+       
+        <MudSpacer />
+           <MudMenu FullWidth="true"  Dense="true" ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
+    <ActivatorContent>
+        <MudChip Icon="@Icons.Material.Filled.Mouse" style="@Museum.BaseColor" >الاقسام</MudChip>
+    </ActivatorContent>
+    <ChildContent >
+        @foreach(var sec in Museum.Sections){
+            <MudMenuItem >
+
+                <a href="@("section/"+sec.Id)" >@sec.Name</a>
+
+            </MudMenuItem>
+        }
+
+    </ChildContent>
+</MudMenu>
+        <MudIconButton Icon="@Icons.Material.Filled.MoreVert"  Edge="Edge.End" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+@code {
+    bool _drawerOpen = false;
+    void clickon(){
+        StateHasChanged();
+    }
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}

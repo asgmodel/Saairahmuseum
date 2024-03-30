@@ -1,0 +1,102 @@
+﻿@page "/section"
+@page "/section/{Id}"
+@using ChatASG.Data
+@inject NavigationManager navigationManager
+<PageTitle ></PageTitle>
+@if(_section!=null){
+
+ <MudAlert Severity="Severity.Normal" NoIcon="true" >
+
+           
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <div class="embed-responsive embed-responsive-16by9">
+       <video src="@_section.Image" style="border-radius: 12px;width:100%;height:400px" controls autoplay muted></video>
+
+</div>
+ </div>
+
+      <div class="col-lg-6">
+                    <h1 class="display-6 fw-bold lh-1 mb-3" style="@Museum.BaseColor" >@_section.Name</h1>
+        <p class="lead">@_section.Description</p>
+      </div>
+
+    </div>
+  </div>
+ </MudAlert>
+
+
+<MudAlert Severity="Severity.Info" NoIcon="true"  style="padding: 5%;width:100%">
+     <h1 class="display-6 fw-bold lh-1 mb-3"  style="@Museum.BaseColor" >#المحتويات </h1>
+              <MudAlert Severity="Severity.Normal" NoIcon="true" Class="mb-2 mt-3">
+
+<div class="wkC">
+    @foreach(var item in _section.Items){
+                    <MudCard class="w30 RCardP " style="margin: 2%;" >
+    <MudCardHeader>
+        <CardHeaderAvatar>
+            <MudAvatar style="@Museum.BaseBKColor">I</MudAvatar>
+        </CardHeaderAvatar>
+        <CardHeaderContent>
+                                <MudText Typo="Typo.body1" Class="text-shadow-1">@item.Name</MudText>
+            <MudText  Typo="Typo.body2">@item.Description</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+        </CardHeaderActions>
+    </MudCardHeader>
+    <MudCardMedia Image="@item.Image" Height="300" />
+   
+   @* <MudCardActions>
+        <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
+        <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
+    </MudCardActions>*@
+</MudCard>
+
+}
+ </div>
+    </MudAlert>
+    </MudAlert>
+}
+else{
+    <MudAlert Severity="Severity.Normal">no found</MudAlert>
+
+}
+@code{
+
+    [Parameter] public string? Id{set;get;}
+
+    private Section? _section;
+    private bool isload=false;
+    protected override void OnInitialized(){
+        base.OnInitialized();
+        _section=Museum.GetSectionById((Id==null)?"s1":Id);
+
+        navigationManager.LocationChanged += OnChangeLocation;
+        isload = true;
+
+    }
+    
+ private  void OnChangeLocation(object sender, LocationChangedEventArgs e)
+    {
+
+        if(isload){
+         _section=Museum.GetSectionById((Id==null)?"s1":Id);
+
+        StateHasChanged();
+        }
+        else{
+            isload=true;
+        }
+    }
+
+    public void Dispose()
+    {
+       
+        navigationManager.LocationChanged -= OnChangeLocation;
+    }
+
+
+}
+

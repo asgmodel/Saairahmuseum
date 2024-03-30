@@ -1,0 +1,21 @@
+﻿<MudPaper Width="250px" Class="py-3" Elevation="0">
+    <MudNavMenu  >
+        <MudText Typo="Typo.body2" style="@Museum.BaseColor"  Class="px-4"> <MudNavLink style="@Museum.BaseColor"  Href="/">الصفحة الرئيسية  </MudNavLink> </MudText>
+
+        <MudDivider Class="my-2" />
+          <MudNavGroup Title="نبذه عامة" Expanded="true">
+            <MudNavLink Href="/bref"> المتحف   </MudNavLink>
+            <MudNavLink Href="/generatingai"> السعيرة   </MudNavLink>
+            <MudNavLink Href="/cv"> مؤسس المتحف    </MudNavLink>
+               </MudNavGroup>
+        <MudNavLink Href="/facilities">مرافق المتحف </MudNavLink>
+      
+      
+        <MudNavGroup Title="الاقسام" Expanded="true">
+              @foreach(var sec in Museum.Sections){
+                <MudNavLink Href="@("section/"+sec.Id)">@sec.Name</MudNavLink>
+              }
+        </MudNavGroup>
+     
+    </MudNavMenu>
+</MudPaper>

@@ -1,0 +1,36 @@
+
+<MudAlert Severity="Severity.Info" NoIcon="true"  style="padding: 5%;width:100%">
+    <h3 class="pb-2 border-bottom"  style="@Museum.BaseColor" >#معرض الصور   </h3>
+
+<div  class="news-pp">
+<MudCarousel Class="mud-width-full" Style="height:400px;" ShowArrows="@arrows" ShowBullets="false" EnableSwipeGesture="@enableSwipeGesture"  TData="object">
+    @foreach(var imgname in Museum.MP){
+    <MudCarouselItem Transition="Transition.Custom" style="@Museum.BaseBKColor">
+        <div class="d-flex" style=";height:100%">
+         <img src="@("images/"+imgname)" class="RCardP" style="width:100%" />
+          </div>
+    </MudCarouselItem>
+    }
+</MudCarousel>
+<MudCarousel Class="mud-width-full" Style="height:400px;" ShowArrows="@arrows" ShowBullets="false" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+    @foreach(var imgname in Museum.MP){
+        <MudCarouselItem Transition="transition" style="@Museum.BaseBKColor">
+        <div class="d-flex" style=";height:100%">
+         <img src="@("images/"+imgname)" class="RCardP" style="width:100%" />
+          </div>
+    </MudCarouselItem>
+    }
+</MudCarousel>
+</div>
+</MudAlert>
+
+
+
+
+@code{ 
+    private bool arrows = true;
+    private bool bullets = true;
+    private bool enableSwipeGesture = true;
+    private bool autocycle = true;
+    private Transition transition = Transition.Fade;
+}
